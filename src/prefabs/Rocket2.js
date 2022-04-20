@@ -5,7 +5,8 @@ class Rocket2 extends Phaser.GameObjects.Sprite{
         scene.add.existing(this);
         this.isFiring = false;
         this.moveSpeed = 2;
-        this.sfxRocket2 = scene.sound.add('sfx_rocket');
+        this.sfxRocket2 = scene.sound.add('sfx_shoot');
+        this.sfxCrash = scene.sound.add('crash');
     }
 
     update(){
@@ -34,6 +35,7 @@ class Rocket2 extends Phaser.GameObjects.Sprite{
         }
         //reset if miss
         if(this.y <= borderUISize * 3 + borderPadding){
+            this.sfxCrash.play();
             this.reset();
         }
     }

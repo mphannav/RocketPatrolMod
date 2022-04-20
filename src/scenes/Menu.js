@@ -4,8 +4,10 @@ class Menu extends Phaser.Scene {
     }
     preload(){
         this.load.audio('sfx_select', './assets/sfx_select.wav');
-        this.load.audio('sfx_explosion', './assets/sfx_explosion.wav');
-        this.load.audio('sfx_rocket', './assets/sfx_rocket.wav');
+        this.load.audio('sfx_explosion', './assets/score.wav');
+        //this.load.audio('sfx_explosionhi', './assets/scorehi.wav');
+        this.load.audio('sfx_shoot', './assets/sfx_shoot.wav');
+        this.load.audio('crash', './assets/crash.wav');
     }
     create(){
         let menuConfig = {

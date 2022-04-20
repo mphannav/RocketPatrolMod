@@ -5,9 +5,10 @@ class Play extends Phaser.Scene {
     preload(){
         this.load.image('rocket', './assets/rocket.png');
         this.load.image('rocket2', './assets/rocket2.png');
-        this.load.image('spaceship', './assets/spaceship.png');
-        this.load.image('starfield', './assets/starfield.png');
-        this.load.image('starfield', './assets/moon.png');
+        this.load.image('spaceship', './assets/newship.png');
+        this.load.image('spaceship2', './assets/spaceship.png');
+        this.load.image('starfield', './assets/starsy.png');
+        //this.load.image('starfield', './assets/moon.png');
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
 
@@ -34,7 +35,7 @@ class Play extends Phaser.Scene {
 
         //spaceships
         this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'spaceship', 0, 30).setOrigin(0, 0);
-        this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0,0);
+        this.ship02 = new Spaceship2(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship2', 0, 20).setOrigin(0,0);
         this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0,0);
 
         this.anims.create({
@@ -71,7 +72,7 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
           }
-        this.scoreRight = this.add.text(borderUISize * 15 + borderPadding, borderUISize + borderPadding*2, this.p2Score, scoreConfig2);
+        this.scoreRight = this.add.text(borderUISize * 15.2 + borderPadding, borderUISize + borderPadding*2, this.p2Score, scoreConfig2);
         
         // let timer = {
         //     fontFamily: 'Courier',
