@@ -78,7 +78,7 @@ class Play extends Phaser.Scene {
         //     fontFamily: 'Courier',
         //     fontSize: '28px',
         //     backgroundColor: '#F3B141',
-        //     color: '#843605',
+        //     color: '#000000',
         //     align: 'middle',
         //     padding: {
         //       top: 5,
@@ -86,12 +86,12 @@ class Play extends Phaser.Scene {
         //     },
         //     fixedWidth: 100
         //   }
-        //   this.middle = this.add.text(borderUISize * 8 + borderPadding, borderUISize + borderPadding*2, this.time, timer).setOrigin(0,0);
+        // this.middle = this.add.text(borderUISize * 8 + borderPadding, borderUISize + borderPadding*2, game.settings.gameTimer/1000, timer).setOrigin(0,0);
 
         this.gameOver = false;
         scoreConfig.fixedWidth = 0;
         scoreConfig2.fixedWidth = 0;
-        this.gameTimer = this.time.delayedCall(60000, () => {
+        this.gameTimer = this.time.delayedCall(game.settings.gameTimer, () => {
         this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
         this.gameOver = true;
