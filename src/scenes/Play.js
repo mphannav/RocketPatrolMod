@@ -9,7 +9,7 @@ class Play extends Phaser.Scene {
         this.load.image('spaceship2', './assets/spaceship.png');
         this.load.image('starfield', './assets/starsy.png');
         //this.load.image('starfield', './assets/moon.png');
-        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 20, frameHeight: 16, startFrame: 0, endFrame: 9});
     }
 
     create(){
@@ -91,7 +91,7 @@ class Play extends Phaser.Scene {
         this.gameOver = false;
         scoreConfig.fixedWidth = 0;
         scoreConfig2.fixedWidth = 0;
-        this.clock = this.time.delayedCall(60000, () => {
+        this.gameTimer = this.time.delayedCall(60000, () => {
         this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
         this.gameOver = true;
@@ -100,6 +100,7 @@ class Play extends Phaser.Scene {
     update(){
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.scene.start("menuScene");
+            this.game.sound.stopAll();
         }
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
@@ -118,6 +119,7 @@ class Play extends Phaser.Scene {
             this.shipExplode(this.ship03);  
           }
         if(this.checkCollision(this.p1Rocket, this.ship02)) {
+            this.p1Score += 20;
             this.p1Rocket.reset();
             this.shipExplode(this.ship02);  
           }
@@ -131,8 +133,9 @@ class Play extends Phaser.Scene {
             this.shipExplode2(this.ship03);  
           }
         if(this.checkCollision(this.p2Rocket, this.ship02)) {
+            this.p2Score += 20; 
             this.p2Rocket.reset();
-            this.shipExplode2(this.ship02);  
+            this.shipExplode2(this.ship02); 
           }
         if(this.checkCollision(this.p2Rocket, this.ship01)) {
             this.p2Rocket.reset();
