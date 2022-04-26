@@ -8,14 +8,16 @@ class Play extends Phaser.Scene {
         this.load.image('spaceship', './assets/newship.png');
         this.load.image('spaceship2', './assets/spaceship.png');
         this.load.image('starfield', './assets/starsy.png');
+        this.load.image('title', './assets/Title.png');
         //this.load.image('starfield', './assets/moon.png');
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 20, frameHeight: 16, startFrame: 0, endFrame: 9});
+        //this.load.spritesheet('ship', './assets/ship_animate.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
 
     create(){
         //green rectangle
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
-        this.green = this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0, 0);
+        this.title = this.add.image(250, 50, 'title').setOrigin(0, 0);
         //white borders
         this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
@@ -32,6 +34,12 @@ class Play extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        
+        // this.anims.create({
+        //     key: 'ship_moving',
+        //     frames: this.anims.generateFrameNumbers('ship', { start: 0, end: 9, first: 0}),
+        //     frameRate: 30
+        // });
 
         //spaceships
         this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'spaceship', 0, 30).setOrigin(0, 0);
@@ -73,25 +81,24 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
           }
         this.scoreRight = this.add.text(borderUISize * 15.2 + borderPadding, borderUISize + borderPadding*2, this.p2Score, scoreConfig2);
-        
-        // let timer = {
-        //     fontFamily: 'Courier',
-        //     fontSize: '28px',
-        //     backgroundColor: '#F3B141',
-        //     color: '#000000',
-        //     align: 'middle',
-        //     padding: {
-        //       top: 5,
-        //       bottom: 5,
-        //     },
-        //     fixedWidth: 100
-        //   }
-        // this.middle = this.add.text(borderUISize * 8 + borderPadding, borderUISize + borderPadding*2, game.settings.gameTimer/1000, timer).setOrigin(0,0);
-
+        let timer = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#000000',
+            align: 'middle',
+            padding: {
+              top: 5,
+              bottom: 5,
+            },
+            fixedWidth: 100
+          }
+        //this.middle = this.add.text(borderUISize * 8 + borderPadding, borderUISize + borderPadding*2, game.settings.gameTimer/1000, timer).setOrigin(0,0);
+        //this.middle.text = 'Name of Timer ' + this.timer.getRemainingSeconds();
         this.gameOver = false;
         scoreConfig.fixedWidth = 0;
         scoreConfig2.fixedWidth = 0;
-        this.gameTimer = this.time.delayedCall(game.settings.gameTimer, () => {
+        this.display = this.time.delayedCall(game.settings.gameTimer, () => {
         this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
         this.gameOver = true;
@@ -102,9 +109,11 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene");
             this.game.sound.stopAll();
         }
+        //boom.anims.play('ship_moving');
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
         }
+
         this.starfield.tilePositionX -= 4;
         if(!this.gameOver){
             this.p1Rocket.update();
